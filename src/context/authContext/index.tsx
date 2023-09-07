@@ -9,10 +9,11 @@ import {
   import { useNavigate } from 'react-router-dom'
   import { login } from '../../service/index'
 
+
   
   interface IAuthContext {
-    // user?: User
-    // setUser: (user: User) => void
+    user?: User
+    setUser: (user: User) => void
     signIn: (credentials: LoginProps) => Promise<void>
     signOut: () => void
     isAuthenticated: boolean
@@ -26,10 +27,12 @@ import {
   
   export function AuthProvider({ children }: IAuthProvider) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+    const [user, setUser] = useState<User>()
     const navigate = useNavigate()
   
     async function signIn({ handle, password }: LoginProps) {
         console.log('teste context')
+        
       try {
         const response = await login({
           handle,
@@ -39,15 +42,20 @@ import {
         if (response.token) {
           navigate('/home')
           localStorage.setItem('token', response.token)
-          localStorage.setItem('user', JSON.stringify(response.user))
+         localStorage.setItem('user', JSON.stringify(response.user))
           setIsAuthenticated(true)
+
         }
+        
+        
       } catch (error) {
         throw new Error(error as string)
       }
+
+      
     }
   
-    function signOut() {
+     function signOut() {
       localStorage.clear()
   
       navigate('/')
@@ -57,12 +65,18 @@ import {
   
     useEffect(() => {
       const token = localStorage.getItem('token')
-  
+      const authUser = localStorage.getItem('user')
+
+      
       if (!token) {
         setIsAuthenticated(false)
         return
       }
-  
+      
+        
+        if(authUser){
+          setUser(JSON.parse(authUser))
+        }
       setIsAuthenticated(true)
     }, [])
   
@@ -72,6 +86,8 @@ import {
           signIn,
           signOut,
           isAuthenticated,
+          user,
+          setUser
         }}
       >
         {children}

@@ -11,3 +11,9 @@ export interface LoginProps{
   handle: string,
   password: string
 }
+
+export interface SignupProps{
+  name: string
+  handle: string
+  password: string
+}

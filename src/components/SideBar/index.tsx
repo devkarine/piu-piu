@@ -10,10 +10,12 @@ import { useState } from "react";
 import axios from "axios";
 import { User } from "../../types/Users";
 import { backendRoutes } from "../../routes";
+import { useAuth } from "../../context/authContext";
 export const SideBar = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [addingPiupiu, setAddingPiupiu] = useState(false);
   const [textValue, setTextValue] = useState("");
+  const {user, signOut} = useAuth()
 
   const handleSubmit = async (e: React.FormEvent, formValue?: string) => {
     e.preventDefault();
@@ -71,13 +73,13 @@ export const SideBar = () => {
           </div>
         </div>
         <SessionController
-          user={{} as User}
+          user={user as User}
           options={[
             {
               text: "Entrar com outra conta",
               onClick: () => {},
             },
-            { text: `Sair de @`, onClick: () => {} },
+            { text: `Sair de @${user?.handle}`, onClick: signOut },
           ]}
         />
       </nav>

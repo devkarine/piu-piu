@@ -9,14 +9,30 @@ import { BsFillPencilFill } from "react-icons/bs";
 import { ProfileEditForm } from "../components/ProfileEditForm";
 import { Dialog } from "../components/Dialog";
 import { routes } from "../routes";
+// import { getUser } from "../service";
+
+
 
 export const ProfileLayout = () => {
   const [user, setUser] = useState<User>();
   const [userPosts, setUserPosts] = useState<number>();
   const [dialogOpen, setDialogOpen] = useState(false);
+  // const {user} = useAuth()
+  
+  // const getProfile = async ()=>{
+  //   try {
+     
+  //       await getUser({handle})
+  //     } catch (error) {
+  //      console.log(error)
+      
+  //    }
+  // }
+
 
   const handleDialogClick = () => {
     setDialogOpen(!dialogOpen);
+
   };
 
   return (
