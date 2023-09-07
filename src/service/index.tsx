@@ -1,5 +1,5 @@
 import { backendRoutes } from "../routes";
-import { LoginProps, SignupProps, User } from "../types/Users";
+import { LoginProps, SignupProps } from "../types/Users";
 import { api } from "./api";
 
 import { AxiosError } from "axios";
@@ -39,30 +39,16 @@ export async function signup({name, handle, password}: SignupProps){
     }
 }
 
-// export async function getUser({
-//     handle,
-//     name,
-//     image_url,
-//     verified,
-//     description,
-//     posts,}:User) {
+
+export async function getUsers(handle:string) {
     
-//     try {
-//         const response = await api.get(`/users/${handle}`,{
-//           handle,
-//          name,
-//         image_url,
-//         verified,
-//         description,
-//         posts,
-//         })
+    try {
+       const response =  await api.get(`users/${handle}`)
 
-//         const {data} = response
+       const {data} = response
 
-//         return data
-
-//     } catch (error) {
-//         const AxiosError = error as AxiosError
-//         return AxiosError.response?.status
-//     }
-//   }
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+  }
