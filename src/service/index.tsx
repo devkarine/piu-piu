@@ -4,7 +4,15 @@ import { api } from "./api";
 
 import { AxiosError } from "axios";
 
+interface GetPostsProps{
+    handle: string | undefined
+    postsRoute: string
+}
 
+interface PageProps{
+    page: number
+    per_page: number
+}
 export async function login({handle, password}: LoginProps){
     try {
         const response = await api.post(backendRoutes.login, {
@@ -40,14 +48,56 @@ export async function signup({name, handle, password}: SignupProps){
 }
 
 
-export async function getUsers(handle:string) {
-    
+export async function getUsers(handle:string | undefined) {
+    const tokenUser = localStorage.getItem('token')
     try {
-       const response =  await api.get(`users/${handle}`)
+       const response =  await api.get(`users/${handle}`,{
+        headers: {
+            Authorization: `Bearer ${tokenUser}`,
+        }
+        });
 
-       const {data} = response
+       
 
-        return data
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  export async function getPosts({handle, postsRoute}: GetPostsProps) {
+    const tokenUser = localStorage.getItem('token')
+    try {
+       const response =  await api.get(postsRoute === 'posts' ? `users/${handle}/posts`: `users/${handle}/likes`,{
+        headers: {
+            Authorization: `Bearer ${tokenUser}`,
+        }
+        });
+
+       
+
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  export async function getPius({page, per_page}: PageProps) {
+    const tokenUser = localStorage.getItem('token')
+    try {
+       const response =  await api.get(`pius/`,{
+        headers: {
+            Authorization: `Bearer ${tokenUser}`,
+        },
+        params:{
+            page,
+            per_page
+        }
+        });
+
+       
+
+        return response.data
     } catch (error) {
         console.log(error)
     }

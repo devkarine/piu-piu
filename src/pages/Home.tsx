@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NewPiupiu } from "../components/NewPiupiu";
 import { Piu } from "../types/Pius";
 import NavTitle from "../components/NavTitle";
@@ -8,19 +8,22 @@ import { usePagination } from "../hooks/useScroll";
 import { piuComponentHeight } from "../consts";
 import { User } from "../types/Users";
 import { routes } from "../routes";
+import { getPius } from "../service";
 
 export const Home = () => {
   const [textValue, setTextValue] = useState("");
-  const [piupius, setPiupius] = useState<Piu[] | undefined>();
+  const [piupius, setPiupius] = useState<Piu[]>([]);
   const [newData, setNewData] = useState<Piu[] | undefined>();
   const [addingPiupiu, setAddingPiupiu] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [page, setPage] = useState(1)
 
   const topRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const itemsPerPage = Math.ceil(window.screen.height / piuComponentHeight);
 
   const { scrollTop } = usePagination({
-    onBottomEnter: () => {},
+    onBottomEnter: () => setPage(page + 1),
     onTopEnter: () => {},
     onTopLeave: () => {},
     bottomRef,
@@ -42,6 +45,23 @@ export const Home = () => {
         setAddingPiupiu(false);
       });
   };
+
+  
+    const getPostsHome = async () => {
+      try {
+      const response = await getPius({page:page, per_page:20});
+
+      setPiupius([...piupius, ...response.data]);
+      setLoading(false);
+      }
+      catch (error) {
+      console.log(error);
+     }
+    }
+  useEffect(() => {
+    getPostsHome();
+  }, [page]);
+
 
   return (
     <div ref={topRef} className="relative">
@@ -68,10 +88,10 @@ export const Home = () => {
         user={{} as User}
       />
       <PiupiuList
-        initialLoading={true}
+        initialLoading={isLoading}
         topRef={topRef}
         bottomRef={bottomRef}
-        loading={true}
+        loading={isLoading}
         piupius={piupius}
         onChange={() => {}}
       />

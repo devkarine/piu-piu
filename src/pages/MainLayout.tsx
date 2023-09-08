@@ -5,7 +5,7 @@ import { SideList } from "../components/SideList";
 import { Outlet } from "react-router-dom";
 
 export const MainLayout = () => {
-
+  
   return (
     <>
       <SideBar />
