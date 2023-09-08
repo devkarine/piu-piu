@@ -4,7 +4,10 @@ import { MainLayout } from "../pages/MainLayout";
 import { Home } from "../pages/Home";
 import { useAuth } from "../context/authContext";
 import { SignUp } from "../pages/SignUp";
+import { ProfileLayout } from "../pages/ProfileLayout";
+import { routes } from ".";
 import { SinglePiupiu } from "../pages/SinglePiupiu";
+import { Profile } from "../pages/Profile";
 
 export const PiupiuRoutes = () => {
   const {isAuthenticated} = useAuth()
@@ -16,7 +19,13 @@ export const PiupiuRoutes = () => {
       <Route path="/" element={isAuthenticated ? <MainLayout /> : <Navigate to="/" />}>
         <Route path="/home" element={<Home />} />
         <Route path="/following" element={<Home />} />
-        <Route path="/singlePiupiu()" element={<SinglePiupiu />} />
+        <Route path={routes.singlePiupiu()} element={<SinglePiupiu />} />
+
+        <Route element={<ProfileLayout/>}>
+          <Route path={routes.userLikes()} element={<Profile postsRoute="likes"/>}/>
+          <Route path={routes.profile()} element={<Profile postsRoute="posts"/>}/>
+          
+        </Route>
       </Route>
 
       <Route path="/signup" element={ <SignUp /> } />
