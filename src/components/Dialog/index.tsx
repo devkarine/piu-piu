@@ -11,7 +11,7 @@ export const Dialog = ({ open, onClose, children }: DialogProps) => {
     initialState: open || false,
     onChange: onClose,
   });
-
+  // console.log(Dialog)
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";

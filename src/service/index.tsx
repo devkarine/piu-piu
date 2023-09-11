@@ -1,5 +1,5 @@
 import { backendRoutes } from "../routes";
-import { LoginProps, SignupProps } from "../types/Users";
+import { LoginProps, SignupProps, User } from "../types/Users";
 import { api } from "./api";
 
 import { AxiosError } from "axios";
@@ -13,6 +13,11 @@ interface PageProps{
     page: number
     per_page: number
 }
+
+interface EditProfile {
+    handle: string | undefined;
+    users: Partial<User>;
+  }
 export async function login({handle, password}: LoginProps){
     try {
         const response = await api.post(backendRoutes.login, {
@@ -102,3 +107,56 @@ export async function getUsers(handle:string | undefined) {
         console.log(error)
     }
   }
+
+  export async function getLatestUsers() {
+    const tokenUser = localStorage.getItem('token')
+    try {
+       const response =  await api.get(`/users/latest`,{
+        headers: {
+            Authorization: `Bearer ${tokenUser}`,
+        }
+        });
+
+       
+
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+//   export async function pacthUser(handle: string) {
+//     const tokenUser = localStorage.getItem('token')
+//     try {
+//        const response =  await api.patch(`/users/${handle}`,{
+//         headers: {
+//             Authorization: `Bearer ${tokenUser}`,
+//         }
+//         });
+
+       
+
+//         return response.data
+//     } catch (error) {
+//         console.log(error)
+//     }
+//   }
+
+export const pacthUser = async ({ handle, users }: EditProfile) => {
+    const tokenUser = localStorage.getItem("token");
+  
+    try {
+      const response = await api.patch(
+        `users/${handle}`,
+  
+        users,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenUser}`,
+          },
+        }
+      );
+  
+      return response.data;
+    } catch (error) {}
+  };

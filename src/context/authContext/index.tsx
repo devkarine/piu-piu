@@ -31,7 +31,7 @@ import {
     const navigate = useNavigate()
   
     async function signIn({ handle, password }: LoginProps) {
-        console.log('teste context')
+        
         
       try {
         const response = await login({

@@ -15,6 +15,7 @@ export const PiupiuRoutes = () => {
   return (
     <Routes>
       <Route index element={!isAuthenticated ? <Login /> : <Navigate to="/home" />} />
+      <Route path="/signup" element={ <SignUp /> } />
 
       <Route path="/" element={isAuthenticated ? <MainLayout /> : <Navigate to="/" />}>
         <Route path="/home" element={<Home />} />
@@ -28,7 +29,7 @@ export const PiupiuRoutes = () => {
         </Route>
       </Route>
 
-      <Route path="/signup" element={ <SignUp /> } />
+      
     </Routes>
   );
 };

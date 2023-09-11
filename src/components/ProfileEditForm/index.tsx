@@ -11,7 +11,7 @@ type ProfileEditFormProps = {
 };
 
 export const ProfileEditForm = ({ onSubmit, user }: ProfileEditFormProps) => {
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(user.image_url);
   const [description, setDescription] = useState(user.description || "");
   const [name, setName] = useState(user.name);
 

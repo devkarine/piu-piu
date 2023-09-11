@@ -1,3 +1,4 @@
+
 import { User } from "../../types/Users";
 import { Button } from "../Button";
 import { CircularSpinner } from "../CircularSpinner";
@@ -5,11 +6,13 @@ import { ProfilePic } from "../ProfilePic";
 import { SideCard } from "../Sidecard";
 import { Username } from "../Username";
 
+
 type SideListProps = {
   users?: User[];
   loading?: boolean;
 };
 export const SideList = ({ users, loading }: SideListProps) => {
+  
   return (
     <SideCard>
       {loading ? (

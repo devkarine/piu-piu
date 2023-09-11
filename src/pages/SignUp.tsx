@@ -14,13 +14,13 @@ export const SignUp = () => {
   const onSubmit = async (e: React.FormEvent) => {
     
     e.preventDefault();
-    console.log('teste.')
+   
     try {
         
-       const response =  await signup({name, handle, password})
-       console.log(response)
+        await signup({name, handle, password})
+      
         navigate('/')
-        console.log('teste')
+        
      } catch (error) {
       console.log(error)
      }
