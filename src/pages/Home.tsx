@@ -8,7 +8,8 @@ import { usePagination } from "../hooks/useScroll";
 import { piuComponentHeight } from "../consts";
 import { User } from "../types/Users";
 import { routes } from "../routes";
-import { getPius } from "../service";
+import { createNewPosts, getPius } from "../service";
+import { useAuth } from "../context/authContext";
 
 export const Home = () => {
   const [textValue, setTextValue] = useState("");
@@ -16,11 +17,12 @@ export const Home = () => {
   const [newData, setNewData] = useState<Piu[] | undefined>();
   const [addingPiupiu, setAddingPiupiu] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
 
   const topRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const itemsPerPage = Math.ceil(window.screen.height / piuComponentHeight);
+  const { user } = useAuth();
 
   const { scrollTop } = usePagination({
     onBottomEnter: () => setPage(page + 1),
@@ -34,10 +36,7 @@ export const Home = () => {
   const handleSubmit = async (e: React.FormEvent, formValue?: string) => {
     e.preventDefault();
     setAddingPiupiu(true);
-    axios
-      .post("/posts", {
-        message: formValue,
-      })
+    createNewPosts(formValue as string)
       .then(() => {
         setTextValue("");
       })
@@ -46,22 +45,19 @@ export const Home = () => {
       });
   };
 
-  
-    const getPostsHome = async () => {
-      try {
-      const response = await getPius({page:page, per_page:20});
+  const getPostsHome = async () => {
+    try {
+      const response = await getPius({ page: page, per_page: 20 });
 
       setPiupius([...piupius, ...response.data]);
       setLoading(false);
-      }
-      catch (error) {
+    } catch (error) {
       console.log(error);
-     }
     }
+  };
   useEffect(() => {
     getPostsHome();
   }, [page]);
-
 
   return (
     <div ref={topRef} className="relative">
@@ -85,7 +81,7 @@ export const Home = () => {
         value={textValue}
         onChange={(e) => setTextValue(e.target.value)}
         onSubmit={handleSubmit}
-        user={{} as User}
+        user={user as User}
       />
       <PiupiuList
         initialLoading={isLoading}

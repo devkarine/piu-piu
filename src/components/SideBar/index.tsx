@@ -11,19 +11,18 @@ import axios from "axios";
 import { User } from "../../types/Users";
 import { routes } from "../../routes";
 import { useAuth } from "../../context/authContext";
+import { createNewPosts } from "../../service";
 export const SideBar = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [addingPiupiu, setAddingPiupiu] = useState(false);
   const [textValue, setTextValue] = useState("");
-  const {user, signOut} = useAuth()
+  const { user, signOut } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent, formValue?: string) => {
     e.preventDefault();
     setAddingPiupiu(true);
-    axios
-      .post("/posts", {
-        message: formValue,
-      })
+    setAddingPiupiu(true);
+    createNewPosts(formValue as string)
       .then(() => {
         setTextValue("");
       })

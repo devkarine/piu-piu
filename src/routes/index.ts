@@ -27,6 +27,7 @@ export const backendRoutes = {
     reply: (id: string = ":id") => `/posts/${id}/reply`,
     // v Retorna Piu
     like: (id: string = ":id") => `/posts/${id}/like`,
+    likes: (id: string = ":id") => `/posts/${id}/likes`,
   },
   // v Retorna { user:User, posts:number }
   profile: (handle: string = ":handle") => `/users/${handle}`,
