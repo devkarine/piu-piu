@@ -10,22 +10,17 @@ export const SignUp = () => {
   const [handle, setHandle] = useState("");
   const [password, setPassword] = useState("");
   const [signingUp, setSigningUp] = useState(false);
-  const navigate =useNavigate()
+  const navigate = useNavigate();
   const onSubmit = async (e: React.FormEvent) => {
-    
     e.preventDefault();
-   
-    try {
-        
-        await signup({name, handle, password})
-      
-        navigate('/')
-        
-     } catch (error) {
-      console.log(error)
-     }
-     
 
+    try {
+      await signup({ name, handle, password });
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

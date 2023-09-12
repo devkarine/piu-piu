@@ -10,26 +10,35 @@ import { SinglePiupiu } from "../pages/SinglePiupiu";
 import { Profile } from "../pages/Profile";
 
 export const PiupiuRoutes = () => {
-  const {isAuthenticated} = useAuth()
- 
+  const { isAuthenticated } = useAuth();
+
   return (
     <Routes>
-      <Route index element={!isAuthenticated ? <Login /> : <Navigate to="/home" />} />
-      <Route path="/signup" element={ <SignUp /> } />
+      <Route
+        index
+        element={!isAuthenticated ? <Login /> : <Navigate to="/home" />}
+      />
+      <Route path="/signup" element={<SignUp />} />
 
-      <Route path="/" element={isAuthenticated ? <MainLayout /> : <Navigate to="/" />}>
+      <Route
+        path="/"
+        element={isAuthenticated ? <MainLayout /> : <Navigate to="/" />}
+      >
         <Route path="/home" element={<Home />} />
         <Route path="/following" element={<Home />} />
         <Route path={routes.singlePiupiu()} element={<SinglePiupiu />} />
 
-        <Route element={<ProfileLayout/>}>
-          <Route path={routes.userLikes()} element={<Profile postsRoute="likes"/>}/>
-          <Route path={routes.profile()} element={<Profile postsRoute="posts"/>}/>
-          
+        <Route element={<ProfileLayout />}>
+          <Route
+            path={routes.userLikes()}
+            element={<Profile postsRoute="likes" />}
+          />
+          <Route
+            path={routes.profile()}
+            element={<Profile postsRoute="posts" />}
+          />
         </Route>
       </Route>
-
-      
     </Routes>
   );
 };

@@ -70,17 +70,15 @@ export const ProfileLayout = () => {
               />
             </div>
 
-            {usersProfile?.user.handle === user?.handle &&  (
-
-            <div
-              onClick={handleDialogClick}
-              className="absolute cursor-pointer rounded-full bg-zinc-950 hover:bg-zinc-900 p-6 right-4 top-4"
-            >
-              <BsFillPencilFill />
-            </div>
+            {usersProfile?.user.handle === user?.handle && (
+              <div
+                onClick={handleDialogClick}
+                className="absolute cursor-pointer rounded-full bg-zinc-950 hover:bg-zinc-900 p-6 right-4 top-4"
+              >
+                <BsFillPencilFill />
+              </div>
             )}
           </div>
-          
 
           <div>
             <Username size="xl" variant="column" user={usersProfile?.user} />

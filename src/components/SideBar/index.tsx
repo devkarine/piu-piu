@@ -21,7 +21,7 @@ export const SideBar = () => {
   const handleSubmit = async (e: React.FormEvent, formValue?: string) => {
     e.preventDefault();
     setAddingPiupiu(true);
-    setAddingPiupiu(true);
+    // setAddingPiupiu(true);
     createNewPosts(formValue as string)
       .then(() => {
         setTextValue("");
@@ -90,7 +90,7 @@ export const SideBar = () => {
             loading={addingPiupiu}
             onSubmit={handleSubmit}
             variant="borderless"
-            user={{} as User}
+            user={user as User}
           />
         </div>
       </Dialog>

@@ -8,12 +8,11 @@ type ProfileProps = {
 };
 
 export const Profile = ({ postsRoute }: ProfileProps) => {
-  const {handle} = useParams()
-  const {data: piupius, isLoading} = useQuery({
-    queryKey:['piupius', postsRoute],
-    queryFn: async () => await getPosts({handle, postsRoute})
-  })
- 
+  const { handle } = useParams();
+  const { data: piupius, isLoading } = useQuery({
+    queryKey: ["piupius", postsRoute],
+    queryFn: async () => await getPosts({ handle, postsRoute }),
+  });
 
   return (
     <>
@@ -23,4 +22,3 @@ export const Profile = ({ postsRoute }: ProfileProps) => {
     </>
   );
 };
-

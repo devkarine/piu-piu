@@ -35,6 +35,7 @@ export const Home = () => {
 
   const handleSubmit = async (e: React.FormEvent, formValue?: string) => {
     e.preventDefault();
+
     setAddingPiupiu(true);
     createNewPosts(formValue as string)
       .then(() => {

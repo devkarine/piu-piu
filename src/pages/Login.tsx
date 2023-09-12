@@ -5,26 +5,23 @@ import { AuthFormLayout } from "../components/AuthFormLayout";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
-
 export const Login = () => {
-  const {signIn} = useAuth()
+  const { signIn } = useAuth();
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
-  
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-   
-     try {
-      setIsLoading(true)
-        await signIn({handle:user, password})
-        console.log('teste')
-     } catch (error) {
-      
-     }finally{
-      setIsLoading(false)
-     }
 
+    try {
+      setIsLoading(true);
+      await signIn({ handle: user, password });
+      console.log("teste");
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
