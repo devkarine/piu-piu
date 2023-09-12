@@ -52,6 +52,21 @@ export async function signup({name, handle, password}: SignupProps){
     }
 }
 
+export async function createNewPosts(){
+    try {
+        const response = await api.post(backendRoutes.posts)
+
+        const {data} = response
+
+        console.log("createNewPost",data)
+
+        return data
+
+    } catch (error) {
+        const AxiosError = error as AxiosError
+        return AxiosError.response?.status
+    }
+}
 
 export async function getUsers(handle:string | undefined) {
     const tokenUser = localStorage.getItem('token')
